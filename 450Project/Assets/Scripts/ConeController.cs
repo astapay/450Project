@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -35,17 +36,48 @@ public class ConeController : MonoBehaviour
         }
 
         transform.position = mousePos;
-
-        // Setting collected scoops as part of cone
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name.Contains("Scoop") && !collision.gameObject.GetComponent<ScoopController>().isInStack())
         {
-            addToStack(collision.gameObject);
-            //logScoops();
+            if (confirmCorrectScoop(collision))
+            {
+                addToStack(collision.gameObject);
+                //logScoops();
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
         }
+    }
+
+    public bool confirmCorrectScoop(Collision2D collision)
+    {
+        GameController gm = FindObjectOfType<GameController>();
+
+        int lastScoopIndex = 3;
+
+        for (int i = 0; i < scoops.Length; ++i)
+        {
+            if (scoops[i] == null)
+            {
+                lastScoopIndex = i - 1;
+                break;
+            }
+        }
+
+        int prevScoopType = -1;
+        int nextScoopType = collision.gameObject.GetComponent<ScoopController>().getScoopType();
+
+        if (lastScoopIndex >= 0)
+        {
+            prevScoopType = scoops[lastScoopIndex].GetComponent<ScoopController>().getScoopType();
+        }
+
+        return gm.checkNextScoop(prevScoopType, nextScoopType);
     }
 
     public void addToStack(GameObject scoop)

@@ -33,7 +33,15 @@ public class ScoopController : MonoBehaviour
         if (collision.gameObject.name.Contains("Scoop") && !collision.gameObject.GetComponent<ScoopController>().isInStack() && gameObject.GetComponent<ScoopController>().isInStack())
         {
             ConeController cone = GameObject.FindObjectOfType<ConeController>();
-            cone.addToStack(collision.gameObject);
+
+            if (cone.confirmCorrectScoop(collision))
+            {
+                cone.addToStack(collision.gameObject);
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 
