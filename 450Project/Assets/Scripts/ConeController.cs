@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ConeController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ConeController : MonoBehaviour
     void Start()
     {
         scoops = new GameObject[4];
+        //logScoops();
     }
 
     // Update is called once per frame
@@ -42,12 +44,13 @@ public class ConeController : MonoBehaviour
         if (collision.gameObject.name.Contains("Scoop") && !collision.gameObject.GetComponent<ScoopController>().isInStack())
         {
             addToStack(collision.gameObject);
+            //logScoops();
         }
     }
 
     public void addToStack(GameObject scoop)
     {
-        scoop.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionY;
+        scoop.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         //if less than 4 scoops, add a scoop to the top
         if (scoops[3] == null)
         {
@@ -56,7 +59,8 @@ public class ConeController : MonoBehaviour
                 if (scoops[i] == null)
                 {
                     scoops[i] = scoop;
-                    scoops[i].transform.position = new Vector3(transform.position.x, scoopPositions[i], 0);
+                    scoops[i].transform.position = new Vector3(transform.position.x, scoopPositions[i] + transform.position.y, 0);
+                    break;
                 }
             }
         }
@@ -65,14 +69,24 @@ public class ConeController : MonoBehaviour
             Destroy(scoops[0]);
             for (int i = 1; i < scoops.Length; ++i)
             {
-                scoops[i].transform.position = new Vector3(transform.position.x, scoopPositions[i - 1], 0);
                 scoops[i - 1] = scoops[i];
+                scoops[i - 1].transform.position = new Vector3(transform.position.x, scoopPositions[i - 1] + transform.position.y, 0);
             }
 
             scoops[3] = scoop;
+            scoops[3].transform.position = new Vector3(transform.position.x, scoopPositions[3] + transform.position.y, 0);
         }
         scoop.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         scoop.transform.parent = transform;        
         scoop.GetComponent<ScoopController>().addToScoop();
+    }
+
+    private void logScoops()
+    {
+        Debug.Log("Stack size: " + scoops.Length);
+        for(int i = 0;i < scoops.Length; i++)
+        {
+            Debug.Log("Scoop " + i + ": " + scoops[i].GetComponent<ScoopController>().getScoopType());
+        }
     }
 }

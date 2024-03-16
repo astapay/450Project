@@ -46,4 +46,9 @@ public class ScoopController : MonoBehaviour
     {
         return inStack;
     }
+
+    public int getScoopType()
+    {
+        return scoopType;
+    }
 }
