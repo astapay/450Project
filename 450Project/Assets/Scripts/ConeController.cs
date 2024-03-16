@@ -80,13 +80,4 @@ public class ConeController : MonoBehaviour
         scoop.transform.parent = transform;        
         scoop.GetComponent<ScoopController>().addToScoop();
     }
-
-    private void logScoops()
-    {
-        Debug.Log("Stack size: " + scoops.Length);
-        for(int i = 0;i < scoops.Length; i++)
-        {
-            Debug.Log("Scoop " + i + ": " + scoops[i].GetComponent<ScoopController>().getScoopType());
-        }
-    }
 }
