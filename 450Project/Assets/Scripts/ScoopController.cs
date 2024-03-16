@@ -7,6 +7,7 @@ public class ScoopController : MonoBehaviour
 {
     [SerializeField] private Sprite[] sprites;
     private int scoopType;
+    private bool inStack = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,5 +25,25 @@ public class ScoopController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        if (collision.gameObject.name.Contains("Scoop") && !collision.gameObject.GetComponent<ScoopController>().isInStack() && gameObject.GetComponent<ScoopController>().isInStack())
+        {
+            ConeController cone = GameObject.FindObjectOfType<ConeController>();
+            cone.addToStack(collision.gameObject);
+        }
+    }
+
+    public void addToScoop()
+    {
+        inStack = true;
+    }
+
+    public bool isInStack()
+    {
+        return inStack;
     }
 }
