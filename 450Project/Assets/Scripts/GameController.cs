@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject scoopPrefab;
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text orderText;
+    [SerializeField] private TMP_Text timerText;
 
     private int score;
     private List<int> flavorOrder;
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour
         orderText.text = "Order: " + flavorOrderText;
 
         InvokeRepeating("SpawnScoop", 1, 1);
+        StartCoroutine(timer());
     }
 
     // Update is called once per frame
@@ -104,4 +106,15 @@ public class GameController : MonoBehaviour
 
         scoreText.text = "Score: " + score;
     }
+
+    IEnumerator timer()
+    {
+        for (int i = 59; i >= 0; i--)
+        {
+            timerText.text = ":"+i;
+            yield return new WaitForSeconds(1);
+        }
+        //end game
+    }
+
 }
