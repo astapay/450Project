@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour
                 flavorOrderText += "->";
             }
         }
+        flavorOrderText = flavorOrderText.Substring(0, flavorOrderText.Length - 2);
 
         orderText.text = "Order: " + flavorOrderText;
 
