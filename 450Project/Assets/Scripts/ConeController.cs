@@ -8,13 +8,13 @@ using UnityEngine.UIElements;
 public class ConeController : MonoBehaviour
 {
     [SerializeField] private GameObject[] scoops;
+    [SerializeField] private ScoreController scoreController;
     private readonly float[] scoopPositions = {0.7870655f, 1.309898f, 1.852146f, 2.399546f};
 
     // Start is called before the first frame update
     void Start()
     {
         scoops = new GameObject[4];
-        //logScoops();
     }
 
     // Update is called once per frame
@@ -45,10 +45,19 @@ public class ConeController : MonoBehaviour
             if (confirmCorrectScoop(collision))
             {
                 addToStack(collision.gameObject);
-                //logScoops();
+                if (isFullStack())
+                {
+                    scoreController.addStackPoints();
+                    clearStack();
+                }
+                else
+                {
+                    scoreController.addScoopPoints();
+                }
             }
             else
             {
+                scoreController.removeScoopPoints();
                 Destroy(collision.gameObject);
             }
         }
@@ -83,8 +92,10 @@ public class ConeController : MonoBehaviour
     public void addToStack(GameObject scoop)
     {
         scoop.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        scoop.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
         //if less than 4 scoops, add a scoop to the top
-        if (scoops[3] == null)
+        if (!isFullStack())
         {
             for (int i = 0; i < scoops.Length; ++i)
             {
@@ -111,5 +122,19 @@ public class ConeController : MonoBehaviour
         scoop.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         scoop.transform.parent = transform;        
         scoop.GetComponent<ScoopController>().addToScoop();
+    }
+
+    public bool isFullStack()
+    {
+        return scoops[3] != null;
+    }
+
+    public void clearStack()
+    {
+        for (int i = 0; i < scoops.Length; i++)
+        {
+            Destroy(scoops[i]);
+        }
+        scoops = new GameObject[4];
     }
 }

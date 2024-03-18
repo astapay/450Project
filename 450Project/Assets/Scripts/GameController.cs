@@ -6,17 +6,15 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private GameObject scoopPrefab;
-    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private SceneController sceneController;
     [SerializeField] private TMP_Text orderText;
     [SerializeField] private TMP_Text timerText;
 
-    private int score;
     private List<int> flavorOrder;
 
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
         flavorOrder = new List<int>();
 
         HashSet<int> usedNums = new HashSet<int>();
@@ -100,13 +98,6 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    public void updateScore()
-    {
-        ++score;
-
-        scoreText.text = "Score: " + score;
-    }
-
     IEnumerator timer()
     {
         for (int i = 59; i >= 0; i--)
@@ -114,7 +105,7 @@ public class GameController : MonoBehaviour
             timerText.text = ":"+i;
             yield return new WaitForSeconds(1);
         }
-        //end game
+        sceneController.endGame();
     }
 
 }
