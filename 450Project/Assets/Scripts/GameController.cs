@@ -15,16 +15,30 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CreateOrder();
+
+        InvokeRepeating("SpawnScoop", 1, 1);
+        StartCoroutine(timer());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void CreateOrder()
+    {
         flavorOrder = new List<int>();
 
         HashSet<int> usedNums = new HashSet<int>();
         string flavorOrderText = "";
 
-        while(usedNums.Count < 5)
+        while (usedNums.Count < 5)
         {
             int thisScoop = Random.Range(0, 5);
 
-            if(!usedNums.Contains(thisScoop))
+            if (!usedNums.Contains(thisScoop))
             {
                 usedNums.Add(thisScoop);
                 flavorOrder.Add(thisScoop);
@@ -54,15 +68,6 @@ public class GameController : MonoBehaviour
         flavorOrderText = flavorOrderText.Substring(0, flavorOrderText.Length - 2);
 
         orderText.text = "Order: " + flavorOrderText;
-
-        InvokeRepeating("SpawnScoop", 1, 1);
-        StartCoroutine(timer());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void SpawnScoop()

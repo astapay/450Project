@@ -136,5 +136,8 @@ public class ConeController : MonoBehaviour
             Destroy(scoops[i]);
         }
         scoops = new GameObject[4];
+
+        GameController gm = FindObjectOfType<GameController>();
+        gm.CreateOrder();
     }
 }
