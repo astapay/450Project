@@ -11,14 +11,29 @@ public class GameController : MonoBehaviour
     [SerializeField] private TMP_Text timerText;
 
     private List<int> flavorOrder;
+    private bool multipleOrdersGame;
 
     // Start is called before the first frame update
     void Start()
     {
+        multipleOrdersGame = false;
+
         CreateOrder();
 
-        InvokeRepeating("SpawnScoop", 1, 1);
-        StartCoroutine(timer());
+        if(multipleOrdersGame)
+        {
+            InvokeRepeating("SpawnScoop", 1, 1);
+
+            timerText.text = ":59";
+            StartCoroutine(timerDown());
+        }
+        else
+        {
+            InvokeRepeating("SpawnScoop", 0.5f, 0.5f);
+
+            timerText.text = ":0";
+            StartCoroutine(timerUp());
+        }
     }
 
     // Update is called once per frame
@@ -104,14 +119,32 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    IEnumerator timer()
+    IEnumerator timerDown()
     {
         for (int i = 59; i >= 0; i--)
         {
             timerText.text = ":"+i;
             yield return new WaitForSeconds(1);
         }
-        sceneController.endGame();
+        sceneController.endGame(-999);
     }
 
+    IEnumerator timerUp()
+    {
+        for (int i = 0; i >= 0; i++)
+        {
+            timerText.text = ":" + i;
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    public bool getGameType()
+    {
+        return multipleOrdersGame;
+    }
+
+    public void endOneOrderGame()
+    {
+        sceneController.endGame(int.Parse(timerText.text.Substring(1)));
+    }
 }

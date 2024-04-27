@@ -138,6 +138,14 @@ public class ConeController : MonoBehaviour
         scoops = new GameObject[4];
 
         GameController gm = FindObjectOfType<GameController>();
-        gm.CreateOrder();
+
+        if(gm.getGameType())
+        {
+            gm.CreateOrder();
+        }
+        else
+        {
+            gm.endOneOrderGame();
+        }
     }
 }

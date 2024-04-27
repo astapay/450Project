@@ -21,13 +21,13 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    public void endGame()
+    public void endGame(int score)
     {
         SceneManager.LoadScene(1);
-        StartCoroutine(LoadEndGameSceneAndExecuteCoroutine());
+        StartCoroutine(LoadEndGameSceneAndExecuteCoroutine(score));
     }
 
-    IEnumerator LoadEndGameSceneAndExecuteCoroutine()
+    IEnumerator LoadEndGameSceneAndExecuteCoroutine(int score)
     {
         // Load the end game scene asynchronously
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(1);
@@ -39,6 +39,6 @@ public class SceneController : MonoBehaviour
         }
 
         // Now that the scene is loaded, execute your method
-        scoreController.getFinalScore();
+        scoreController.getFinalScore(score);
     }
 }
