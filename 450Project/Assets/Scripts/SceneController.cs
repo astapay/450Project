@@ -17,7 +17,7 @@ public class SceneController : MonoBehaviour
         if(SceneManager.GetActiveScene().buildIndex == 1 && Input.GetKeyDown("space"))
         {
             Destroy(scoreController.gameObject);
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
     }
 

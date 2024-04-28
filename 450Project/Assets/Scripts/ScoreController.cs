@@ -27,21 +27,21 @@ public class ScoreController : MonoBehaviour
     {
         score += 10;
 
-        scoreText.text = "Score: " + score;
+        scoreText.text = "" + score;
     }
 
     public void addStackPoints()
     {
         score += 100;
 
-        scoreText.text = "Score: " + score;
+        scoreText.text = "" + score;
     }
 
     public void removeScoopPoints()
     {
         score -= 10;
 
-        scoreText.text = "Score: " + score;
+        scoreText.text = "" + score;
     }
 
     public void getFinalScore(int altScore)
