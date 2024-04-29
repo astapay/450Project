@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     [SerializeField] private ScoreController scoreController;
+    
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if(SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -25,6 +29,16 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(1);
         StartCoroutine(LoadEndGameSceneAndExecuteCoroutine(score));
+    }
+
+    public void StartMultipleOrder()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void StartOneOrder()
+    {
+        SceneManager.LoadScene(3);
     }
 
     IEnumerator LoadEndGameSceneAndExecuteCoroutine(int score)

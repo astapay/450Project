@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController2 : MonoBehaviour
 {
     [SerializeField] private GameObject scoopPrefab;
     [SerializeField] private SceneController sceneController;
@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        multipleOrdersGame = true;
+        multipleOrdersGame = false;
 
         CreateOrder();
 
