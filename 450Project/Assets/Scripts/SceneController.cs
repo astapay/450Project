@@ -9,10 +9,7 @@ public class SceneController : MonoBehaviour
     
     void Start()
     {
-        if(SceneManager.GetActiveScene().buildIndex != 1)
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
@@ -20,7 +17,7 @@ public class SceneController : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().buildIndex == 1 && Input.GetKeyDown("space"))
         {
-            Destroy(scoreController.gameObject);
+            Destroy(this.gameObject);
             SceneManager.LoadScene(2);
         }
     }

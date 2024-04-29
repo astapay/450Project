@@ -224,7 +224,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 756057105}
-  - component: {fileID: 756057104}
   - component: {fileID: 756057106}
   m_Layer: 0
   m_Name: GameManager
@@ -233,22 +232,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &756057104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756057103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6f5b541637c42a4580904c44a5b0f8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoopPrefab: {fileID: 4857768631342832469, guid: a0f63f54d26c3a048ad49445a5f15736, type: 3}
-  sceneController: {fileID: 1857946042}
-  orderText: {fileID: 1393873358}
-  timerText: {fileID: 927807683}
 --- !u!4 &756057105
 Transform:
   m_ObjectHideFlags: 0

@@ -66,6 +66,7 @@ public class ConeController : MonoBehaviour
     public bool confirmCorrectScoop(Collision2D collision)
     {
         GameController gm = FindObjectOfType<GameController>();
+        GameController2 gm2 = FindObjectOfType<GameController2>();
 
         int lastScoopIndex = 3;
 
@@ -86,7 +87,18 @@ public class ConeController : MonoBehaviour
             prevScoopType = scoops[lastScoopIndex].GetComponent<ScoopController>().getScoopType();
         }
 
-        return gm.checkNextScoop(prevScoopType, nextScoopType);
+        if(gm != null)
+        {
+            return gm.checkNextScoop(prevScoopType, nextScoopType);
+        }
+        else if(gm2 != null)
+        {
+            return gm2.checkNextScoop(prevScoopType, nextScoopType);
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public void addToStack(GameObject scoop)
@@ -138,14 +150,29 @@ public class ConeController : MonoBehaviour
         scoops = new GameObject[4];
 
         GameController gm = FindObjectOfType<GameController>();
+        GameController2 gm2 = FindObjectOfType<GameController2>();
 
-        if(gm.getGameType())
+        if(gm != null)
         {
-            gm.CreateOrder();
+            if (gm.getGameType())
+            {
+                gm.CreateOrder();
+            }
+            else
+            {
+                gm.endOneOrderGame();
+            }
         }
-        else
+        else if(gm2 != null)
         {
-            gm.endOneOrderGame();
+            if (gm2.getGameType())
+            {
+                gm2.CreateOrder();
+            }
+            else
+            {
+                gm2.endOneOrderGame();
+            }
         }
     }
 }
